@@ -105,7 +105,8 @@ const AuthForm = () => {
         </form>
 
          {/* sign in with social */}
-         
+
+
       </div>
     </div>
   );
