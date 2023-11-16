@@ -5,7 +5,7 @@ import Input from "@/app/components/inputs/Input";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
-import { BsGithub, BsGoogle } from "react-icons/bs"
+import { BsGithub, BsGoogle } from "react-icons/bs";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -80,6 +80,7 @@ const AuthForm = () => {
             type="email"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Input
             id="password"
@@ -87,6 +88,7 @@ const AuthForm = () => {
             type="password"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
 
           <div>
@@ -99,8 +101,7 @@ const AuthForm = () => {
         {/* sign in with social */}
 
         <div className="mt-6">
-
-            {/* divider */}
+          {/* divider */}
           <div className="relative">
             <div
               className="
@@ -137,21 +138,22 @@ const AuthForm = () => {
             </div>
           </div>
 
-            {/* social */}
-          <div className="mt-6 flex gap-2" >
-            <AuthSocialButton 
-            icon={BsGithub}
-            onClick={()=>socialAction("github")}
+          {/* social */}
+          <div className="mt-6 flex gap-2">
+            <AuthSocialButton
+              icon={BsGithub}
+              onClick={() => socialAction("github")}
             />
 
-            <AuthSocialButton 
-            icon={BsGoogle}
-            onClick={()=>socialAction("google")}
+            <AuthSocialButton
+              icon={BsGoogle}
+              onClick={() => socialAction("google")}
             />
           </div>
 
           {/* toggle auth */}
-          <div className="
+          <div
+            className="
           flex
           gap-2
           justify-center
@@ -159,23 +161,23 @@ const AuthForm = () => {
           mt-6 
           px-2
           text-gray-500
-          " >
-
+          "
+          >
             <div>
-            { variant === "LOGIN" ? "New to Messanger?" : "Already have an account?" }
+              {variant === "LOGIN"
+                ? "New to Messanger?"
+                : "Already have an account?"}
             </div>
             <div
-            onClick={toggleVariant}
-            className="
+              onClick={toggleVariant}
+              className="
             underline
             cursor-pointer
             "
             >
-            { variant === "LOGIN" ? "Create an account" : "Login" }
+              {variant === "LOGIN" ? "Create an account" : "Login"}
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
