@@ -51,6 +51,13 @@ const AuthForm = () => {
     };
   };
 
+  
+  const socialAction = (action: string) => {
+    setIsLoading(true);
+
+   
+  } 
+
   return (
     <div
       className="
