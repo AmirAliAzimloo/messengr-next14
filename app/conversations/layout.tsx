@@ -14,10 +14,10 @@ export default async function ConversationLayou({
         <Sidebar>
             <div className="h-full" >
             <ConversationList
-            // initialItems={[]} 
+            initialItems={conversations} 
             />
             {children}
-            </div>
+            </div>  
         </Sidebar>
     )
 }
