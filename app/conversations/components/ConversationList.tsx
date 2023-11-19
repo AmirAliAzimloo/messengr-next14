@@ -1,8 +1,9 @@
+import { FullConversationType } from "@/app/types";
 import { Conversation } from "@prisma/client";
 
 
 interface ConversationListProps{
-    initialItems: Conversation[];
+    initialItems: FullConversationType[];
 }
 
 
