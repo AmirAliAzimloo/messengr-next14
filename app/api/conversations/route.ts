@@ -29,7 +29,7 @@ export async function POST(request: Request) {
                 })),
               },
               {
-                id: currentUser.id,
+                id: currentUser.id, 
               },
             ],
           },
