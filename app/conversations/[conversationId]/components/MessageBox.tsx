@@ -39,7 +39,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   },[conversationId])
 
-  return (
+  return ( 
     <div className={container}>
 
       <div className={avatar}>
