@@ -18,7 +18,7 @@ const Avatar:React.FC<AvatarProps> = ({user}) => {
             h-9
             w-9
             md:h-11
-            md:w11
+            md:w-11
             " >
                 <Image
                 alt="Avatar"
