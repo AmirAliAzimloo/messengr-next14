@@ -13,7 +13,7 @@ export async function POST(
   try {
     const currentUser = await getCurrentUser();
     const {
-      conversationId
+      conversationId 
     } = params;
 
     
