@@ -49,7 +49,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
         onClose={() => setIsModalOpen(false)}
     >
       <div className="bg-white p-5" >
-        <p>Hello world !</p>
+        <p>Hello world !</p> 
       </div>
     </Modal>
   <Transition.Root show={isOpen} as={Fragment}>
