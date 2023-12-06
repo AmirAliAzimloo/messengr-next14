@@ -15,7 +15,6 @@ interface InputProps {
 }
 
 
-- 1 / 58 minnnnnnnnn
 
 const Input: React.FC<InputProps> = ({
   label,
