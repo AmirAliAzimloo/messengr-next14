@@ -30,7 +30,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   console.log(currentUser, '&TEST_CURRENT_USER')
 
   const {
-    register,
+    register, 
     handleSubmit,
     setValue,
     watch,
