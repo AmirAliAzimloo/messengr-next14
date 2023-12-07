@@ -1,21 +1,24 @@
-"use client";
+'use client';
 
-import { Fragment, useMemo, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { IoClose, IoTrash } from "react-icons/io5";
-import { Conversation, User } from "@prisma/client";
-import { format } from "date-fns";
-import useOtherUser from "@/app/hooks/useOtherUser";
-import Avatar from "@/app/components/Avatar";
-import Modal from "@/app/components/modals/Modal";
-import ConfirmModal from "./ConfirmModal";
+import { Fragment, useMemo, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { IoClose, IoTrash } from 'react-icons/io5'
+import { Conversation, User } from '@prisma/client';
+import { format } from 'date-fns';
+
+import useOtherUser from '@/app/hooks/useOtherUser';
+import useActiveList from '@/app/hooks/useActiveList';
+
+import Avatar from '@/app/components/Avatar';
+import AvatarGroup from '@/app/components/AvatarGroup';
+import ConfirmModal from './ConfirmModal';
 
 interface ProfileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   data: Conversation & {
-    users: User[];
-  };
+    users: User[]
+  }
 }
 
 const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
@@ -23,35 +26,35 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   onClose,
   data,
 }) => {
-  const otherUser = useOtherUser(data);
   const [confirmOpen, setConfirmOpen] = useState(false);
-
+  const otherUser = useOtherUser(data);
+  
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), 'PP');
   }, [otherUser.createdAt]);
+  
+  const title = useMemo(() => {
+    return data.name || otherUser.name;
+  }, [data.name, otherUser.name]);
 
-  const title = useMemo(()=>{
-    return data.name || otherUser.name
-  },[data.name , otherUser.name])
-
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const statusText = useMemo(() => {
     if (data.isGroup) {
       return `${data.users.length} members`;
     }
 
-    return'Active'
-  }, [data]);
+    return isActive ? 'Active' : 'Offline'
+  }, [data, isActive]);
 
-
-  return (<>
-
-   <ConfirmModal
-        isOpen={confirmOpen}
+  return (
+    <>
+      <ConfirmModal 
+        isOpen={confirmOpen} 
         onClose={() => setConfirmOpen(false)}
-    />
-
-  <Transition.Root show={isOpen} as={Fragment}>
+      />
+      <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
             as={Fragment}
@@ -70,7 +73,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
               <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                 <Transition.Child
                   as={Fragment}
-                  enter="transform transition ease-in-out duration-500" 
+                  enter="transform transition ease-in-out duration-500"
                   enterFrom="translate-x-full"
                   enterTo="translate-x-0"
                   leave="transform transition ease-in-out duration-500"
@@ -96,7 +99,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center">
                           <div className="mb-2">
-                            <Avatar user={otherUser} />
+                            {data.isGroup ? <AvatarGroup users={data.users} /> : <Avatar user={otherUser} />}
                           </div>
                           <div>
                             {title}
@@ -207,8 +210,9 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
             </div>
           </div>
         </Dialog>
-  </Transition.Root>
-  </>);
-};
+      </Transition.Root>
+    </>
+  )
+}
 
 export default ProfileDrawer;
