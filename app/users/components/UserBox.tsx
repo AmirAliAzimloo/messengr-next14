@@ -1,37 +1,37 @@
-"use client"
+import axios from "axios";
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import {  User } from "@prisma/client";
 
 import Avatar from "@/app/components/Avatar";
-import { User } from "@prisma/client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
-
+import LoadingModal from "@/app/components/modals/LoadingModal";
 
 interface UserBoxProps {
-    data: User
+  data: User
 }
 
+const UserBox: React.FC<UserBoxProps> = ({ 
+  data
+}) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-const UserBox : React.FC<UserBoxProps>  = ({data}) => {
-    const router = useRouter();
-    const [isLoading,setIsLoading] = useState<boolean>(false);
+  const handleClick = useCallback(() => {
+    setIsLoading(true);
 
-    const handleClick = useCallback(()=>{
-        setIsLoading(true)
+    axios.post('/api/conversations', { userId: data.id })
+    .then((data) => {
+      router.push(`/conversations/${data.data.id}`);
+    })
+    .finally(() => setIsLoading(false));
+  }, [data, router]);
 
-        axios.post("/api/conversations",{
-            userId:data.id
-        })
-        .then((data)=>{
-            router.push(`/conversations/${data.data.id}`)
-        })
-        .finally(()=>setIsLoading(false))
-
-
-    },[data,router])
-
-    return ( 
-        <div
+  return (
+    <>
+      {isLoading && (
+        <LoadingModal />
+      )}
+      <div
         onClick={handleClick}
         className="
           w-full 
@@ -59,7 +59,8 @@ const UserBox : React.FC<UserBoxProps>  = ({data}) => {
           </div>
         </div>
       </div>
-     );
+    </>
+  );
 }
  
 export default UserBox;
