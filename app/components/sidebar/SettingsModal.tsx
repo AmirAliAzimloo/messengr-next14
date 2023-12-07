@@ -30,7 +30,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   console.log(currentUser, '&TEST_CURRENT_USER')
 
   const {
-    register, 
+    register,
     handleSubmit,
     setValue,
     watch,
@@ -116,7 +116,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   <CldUploadButton 
                     options={{ maxFiles: 1 }} 
                     onUpload={handleUpload} 
-                    uploadPreset="pgc9ehd5"
+                    uploadPreset="beucbnjw"
                   >
                     <Button
                       disabled={isLoading}
